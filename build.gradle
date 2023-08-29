@@ -37,3 +37,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+	archiveFileName = "shiok_jobs_user_ms.jar"
+	archiveClassifier.set(null)
+}
