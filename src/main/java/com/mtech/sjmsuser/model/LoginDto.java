@@ -9,13 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class educationalExperienceDto {
+public class LoginDto {
 
-    private  String school;
-
-    private String yearStart;
-    private String yearEnd;
-
-
-    private String description;
+    private String accessToken;
+    private String email;
+    private String password;
 }

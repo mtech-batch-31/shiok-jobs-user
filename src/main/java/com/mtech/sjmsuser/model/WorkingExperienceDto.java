@@ -9,9 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class loginDto {
+public class WorkingExperienceDto {
 
-    private String accessToken;
-    private String email;
-    private String password;
+    private  String company;
+
+    private String yearStart;
+    private String yearEnd;
+
+
+    private String jobTitle;
+
+    private String experience;
+
 }
