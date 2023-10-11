@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class UserProfileDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer userId;
+    private Long id;
     private String email;
     private String hashedPassword;
     private String role;

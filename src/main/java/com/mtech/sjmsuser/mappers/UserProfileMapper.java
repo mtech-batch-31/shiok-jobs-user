@@ -9,7 +9,7 @@ public interface UserProfileMapper {
     static UserProfileDto toDto(UserProfile userProfile)
     {return UserProfileDto
             .builder()
-            .userId(userProfile.getId())
+            .id(userProfile.getId())
             .email(userProfile.getEmail())
             .hashedPassword(userProfile.getHashedPassword())
             .role(userProfile.getRole())
