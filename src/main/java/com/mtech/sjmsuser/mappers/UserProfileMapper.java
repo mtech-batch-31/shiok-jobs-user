@@ -10,9 +10,11 @@ public interface UserProfileMapper {
     {return UserProfileDto
             .builder()
             .id(userProfile.getId())
-            .email(userProfile.getEmail())
-            .hashedPassword(userProfile.getHashedPassword())
-            .role(userProfile.getRole())
+            .name(userProfile.getName())
+            .seeking(userProfile.isSeeking())
+            .jobTitle(userProfile.getJobTitle())
+            .image(userProfile.getImage())
+            .about(userProfile.getAbout())
             .build();
     }
 

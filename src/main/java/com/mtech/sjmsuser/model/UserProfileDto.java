@@ -15,8 +15,10 @@ public class UserProfileDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String email;
-    private String hashedPassword;
-    private String role;
+    private String name;
+    private boolean seeking;
+    private String jobTitle;
+    private String image;
+    private String about;
 
 }

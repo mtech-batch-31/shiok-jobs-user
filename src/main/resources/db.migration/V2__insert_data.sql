@@ -1,5 +1,5 @@
-INSERT INTO sjmsuser.user_profile (id, email, hashed_password, role)
+INSERT INTO sjmsuser.user_profile (id,name,seeking,job_title,image,about)
 VALUES
-    (1, 'andrew.tan@sptel.com', 'hashed', 'Assistant Principal Engineer'),
-    (2, 'ernest.lee@sptel.com', 'hashed', 'Principal Engineer'),
-    (3, 'wang.shiji@sptel.com', 'hashed', 'Senior Vice President');
+    (1, 'Andrew Tan', true, 'Assistant Principal Engineer', 'url', 'Job seeker with 10 years experience in programming'),
+    (2, 'Ernest Lee', true, 'Principal Engineer', 'url','Job seeker with 10 years experience in programming'),
+    (3, 'Wang Shiji', false, 'Senior Vice President', 'url','Job seeker with 10 years experience in programming');

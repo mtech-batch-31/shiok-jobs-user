@@ -19,9 +19,11 @@ public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-    private String email;
-    private String hashedPassword;
-    private String role;
+    private String name;
+    private boolean seeking;
+    private String jobTitle;
+    private String image;
+    private String about;
 //
 //    private List<WorkingExperience> workingExperiences;
 //    private List<EducationalExperience> educationalExperiences;
