@@ -5,20 +5,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class UserProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
+    private String accountUuid;
     private String name;
     private boolean seeking;
     private String jobTitle;

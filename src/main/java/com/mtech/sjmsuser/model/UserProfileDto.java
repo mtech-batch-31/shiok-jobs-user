@@ -15,6 +15,7 @@ public class UserProfileDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String accountUuid;
     private String name;
     private boolean seeking;
     private String jobTitle;
