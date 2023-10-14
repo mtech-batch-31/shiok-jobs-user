@@ -10,19 +10,20 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkingExperience {
+public class EducationalExperience {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "profile_id", nullable = false)
     private UserProfile userProfile;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
+
 //    private BigInteger profileId;
-    private String company;
+    private String school;
     private String yearStart;
     private String yearEnd;
-    private String jobTitle;
-    private String experience;
+
+    private String description;
 
     // getters and setters
 }

@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,5 +24,7 @@ public class UserProfileDto {
     private String jobTitle;
     private String image;
     private String about;
+    private List<WorkingExperienceDto> workingExperience;
+    private List<EducationalExperienceDto> educationalExperience;
 
 }

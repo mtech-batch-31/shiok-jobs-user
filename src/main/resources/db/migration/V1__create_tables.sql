@@ -8,3 +8,25 @@ CREATE TABLE IF NOT EXISTS sjmsuser.user_profile
     image character varying(255) NOT NULL,
     about character varying(255) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS sjmsuser.working_experience
+(
+    id serial PRIMARY KEY,
+    profile_id bigint NOT NULL,
+    company character varying(255) NOT NULL,
+    year_start character varying(255) NOT NULL,
+    year_end character varying(255) NOT NULL,
+    job_title character varying(255) NOT NULL,
+    experience character varying(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sjmsuser.educational_experience
+(
+    id serial PRIMARY KEY,
+    profile_id bigint NOT NULL,
+    school character varying(255) NOT NULL,
+    year_start character varying(255) NOT NULL,
+    year_end character varying(255) NOT NULL,
+    description character varying(255) NOT NULL
+);
+
