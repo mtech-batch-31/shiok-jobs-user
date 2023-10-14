@@ -2,12 +2,14 @@ package com.mtech.sjmsuser.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mtech.sjmsuser.entity.UserProfile;
 import com.mtech.sjmsuser.mappers.UserProfileMapper;
 import com.mtech.sjmsuser.model.SnsUpdateUserDto;
 import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
@@ -22,7 +25,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
     private SnsService snsService;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
 //    public UserProfileServiceImpl(UserProfileRepository userProfileRepository){
 //        this.userProfileRepository = userProfileRepository;
@@ -59,15 +62,16 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfile.setSeeking(updateUserDto.isSeekingJob());
         userProfileRepository.saveAndFlush(userProfile);
 
+        // integration with AWS SQS
         SnsUpdateUserDto snsUpdateUserDto = new SnsUpdateUserDto(accountUuid, updateUserDto.isSeekingJob());
         String snsMessage;
         try {
             snsMessage = objectMapper.writeValueAsString(snsUpdateUserDto);
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error occurred while sending message to aws sns");
         }
-
-        // integration with AWS SQS
+        log.info("snsMessage sent: {}", snsMessage);
         snsService.sendMessageToSnsTopic(snsMessage);
         return UserProfileMapper.INSTANCE.toDto(userProfile);
     }
