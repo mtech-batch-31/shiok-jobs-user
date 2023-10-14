@@ -1,6 +1,7 @@
 package com.mtech.sjmsuser.controller;
 
 import com.mtech.sjmsuser.model.UpdateUserDto;
+import com.mtech.sjmsuser.util.JwtTokenUtil;
 import com.mtech.sjmsuser.model.UserProfileDto;
 import com.mtech.sjmsuser.service.UserProfileService; // Import the service
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,11 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
-    @GetMapping("/api/v1/user/{id}")
-    public ResponseEntity<UserProfileDto> retrieveUserProfile(@PathVariable long id) {
-        UserProfileDto userProfileDto = userProfileService.retrieveUserProfile(id);
+    @GetMapping("/api/v1/user/me")
+    public ResponseEntity<UserProfileDto> verifyToken(@RequestHeader("Authorization") String authorizationHeader) {
+            String token = authorizationHeader.replace("Bearer ", "");
+            System.out.println("token " + token);
+            UserProfileDto userProfileDto = userProfileService.findByAccountUuid(JwtTokenUtil.getUserNameFromJWT(token));
         if (userProfileDto != null) {
             return ResponseEntity.ok(userProfileDto);
         } else {

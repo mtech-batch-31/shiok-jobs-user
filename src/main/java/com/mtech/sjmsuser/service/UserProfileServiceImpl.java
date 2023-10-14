@@ -19,12 +19,22 @@ public class UserProfileServiceImpl implements UserProfileService {
         this.userProfileRepository = userProfileRepository;
     }
 
-    public UserProfileDto retrieveUserProfile(long id) {
-        Optional<UserProfile> userProfile = this.userProfileRepository.findById(id);
-        if(userProfile.isEmpty()) {
-            return null;
+//    public UserProfileDto retrieveUserProfile(long id) {
+//        Optional<UserProfile> userProfile = this.userProfileRepository.findById(id);
+//        if(userProfile.isEmpty()) {
+//            return null;
+//        }
+//        return UserProfileMapper.INSTANCE.toDto(userProfile.get());
+//    }
+
+    @Override
+    public UserProfileDto findByAccountUuid(String accountUuid) {
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByAccountUuid(accountUuid);
+        if (userProfileOptional.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
-        return UserProfileMapper.INSTANCE.toDto(userProfile.get());
+        UserProfile userProfile = userProfileOptional.get();
+        return UserProfileMapper.INSTANCE.toDto(userProfile);
     }
 
     @Override

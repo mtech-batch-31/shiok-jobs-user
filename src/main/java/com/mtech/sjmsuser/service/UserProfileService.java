@@ -5,7 +5,7 @@ import com.mtech.sjmsuser.model.UserProfileDto;
 
 public interface UserProfileService {
 
-    UserProfileDto retrieveUserProfile(long id);
+    UserProfileDto findByAccountUuid(String accountUuid);
 
     UserProfileDto updateUserProfile(String accountUuid, UpdateUserDto updateUserDto);
 }

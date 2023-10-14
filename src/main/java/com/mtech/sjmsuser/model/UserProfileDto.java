@@ -1,4 +1,5 @@
 package com.mtech.sjmsuser.model;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,10 +15,10 @@ import lombok.NoArgsConstructor;
 public class UserProfileDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     private String accountUuid;
     private String name;
-    private boolean seeking;
+    private String seeking;
     private String jobTitle;
     private String image;
     private String about;
