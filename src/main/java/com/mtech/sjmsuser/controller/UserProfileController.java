@@ -21,7 +21,7 @@ public class UserProfileController {
     @GetMapping("/api/v1/user/me")
     public ResponseEntity<UserProfileDto> verifyToken(@RequestHeader("Authorization") String authorizationHeader) {
             String token = authorizationHeader.replace("Bearer ", "");
-            System.out.println("token " + token);
+//            System.out.println("token " + token);
             UserProfileDto userProfileDto = userProfileService.findByAccountUuid(JwtTokenUtil.getUserNameFromJWT(token));
         if (userProfileDto != null) {
             return ResponseEntity.ok(userProfileDto);
@@ -33,7 +33,7 @@ public class UserProfileController {
 
     @PutMapping("/api/v1/user")
     public ResponseEntity<UserProfileDto> update(@RequestHeader("account-uuid") String accountUuid, @RequestBody UpdateUserDto updateUserDto) {
-        UserProfileDto userProfileDto = userProfileService.updateUserProfile(accountUuid, updateUserDto  );
+        UserProfileDto userProfileDto = userProfileService.updateUserProfile(accountUuid, updateUserDto);
         if (userProfileDto != null) {
             return ResponseEntity.ok(userProfileDto);
         } else {

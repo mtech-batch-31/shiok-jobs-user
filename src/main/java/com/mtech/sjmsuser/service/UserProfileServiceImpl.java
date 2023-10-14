@@ -1,10 +1,14 @@
 package com.mtech.sjmsuser.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mtech.sjmsuser.entity.UserProfile;
 import com.mtech.sjmsuser.mappers.UserProfileMapper;
+import com.mtech.sjmsuser.model.SnsUpdateUserDto;
 import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,11 +17,16 @@ import java.util.Optional;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
-    private final UserProfileRepository userProfileRepository;
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+    @Autowired
+    private SnsService snsService;
 
-    public UserProfileServiceImpl(UserProfileRepository userProfileRepository){
-        this.userProfileRepository = userProfileRepository;
-    }
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+//    public UserProfileServiceImpl(UserProfileRepository userProfileRepository){
+//        this.userProfileRepository = userProfileRepository;
+//    }
 
 //    public UserProfileDto retrieveUserProfile(long id) {
 //        Optional<UserProfile> userProfile = this.userProfileRepository.findById(id);
@@ -26,6 +35,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 //        }
 //        return UserProfileMapper.INSTANCE.toDto(userProfile.get());
 //    }
+
+
 
     @Override
     public UserProfileDto findByAccountUuid(String accountUuid) {
@@ -48,7 +59,16 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfile.setSeeking(updateUserDto.isSeekingJob());
         userProfileRepository.saveAndFlush(userProfile);
 
-        // TODO: integration with AWS SQS
+        SnsUpdateUserDto snsUpdateUserDto = new SnsUpdateUserDto(accountUuid, updateUserDto.isSeekingJob());
+        String snsMessage;
+        try {
+            snsMessage = objectMapper.writeValueAsString(snsUpdateUserDto);
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error occurred while sending message to aws sns");
+        }
+
+        // integration with AWS SQS
+        snsService.sendMessageToSnsTopic(snsMessage);
         return UserProfileMapper.INSTANCE.toDto(userProfile);
     }
 }
