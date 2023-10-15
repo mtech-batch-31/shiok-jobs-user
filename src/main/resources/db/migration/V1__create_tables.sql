@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS sjmsuser.user_profile
     seeking bool NOT NULL DEFAULT TRUE,
     job_title character varying(255) NOT NULL,
     image character varying(255) NOT NULL,
-    about character varying(255) NOT NULL
+    about character varying(512) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS sjmsuser.working_experience
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS sjmsuser.working_experience
     year_start character varying(255) NOT NULL,
     year_end character varying(255) NOT NULL,
     job_title character varying(255) NOT NULL,
-    experience character varying(255) NOT NULL
+    experience character varying(512) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS sjmsuser.educational_experience

@@ -1,9 +1,8 @@
 package com.mtech.sjmsuser.controller;
 
 import com.mtech.sjmsuser.model.UpdateUserDto;
-import com.mtech.sjmsuser.util.JwtTokenUtil;
 import com.mtech.sjmsuser.model.UserProfileDto;
-import com.mtech.sjmsuser.service.UserProfileService; // Import the service
+import com.mtech.sjmsuser.service.UserProfileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
-    @GetMapping("/api/v1/user/me")
+    @GetMapping("/v1/user/me")
     public ResponseEntity<UserProfileDto> verifyToken(@RequestHeader("user-id") String userId) {
 //            System.out.println("token " + token);
             UserProfileDto userProfileDto = userProfileService.findByAccountUuid(userId);
@@ -30,7 +29,7 @@ public class UserProfileController {
         }
     }
 
-    @PutMapping("/api/v1/user")
+    @PutMapping("/v1/user")
     public ResponseEntity<UserProfileDto> update(@RequestHeader("user-id") String accountUuid, @RequestBody UpdateUserDto updateUserDto) {
         UserProfileDto userProfileDto = userProfileService.updateUserProfile(accountUuid, updateUserDto);
         if (userProfileDto != null) {
