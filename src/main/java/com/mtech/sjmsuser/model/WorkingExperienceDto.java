@@ -27,6 +27,8 @@ public class WorkingExperienceDto {
 
     private String jobTitle;
 
+    private String logo;
+
     private String experience;
 
 }

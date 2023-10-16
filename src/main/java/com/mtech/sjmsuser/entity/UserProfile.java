@@ -21,6 +21,7 @@ public class UserProfile {
     private boolean seeking;
     private String jobTitle;
     private String image;
+    @Column(length = 512)
     private String about;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userProfile")

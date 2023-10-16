@@ -24,6 +24,7 @@ public class EducationalExperienceDto {
     private String yearStart;
     private String yearEnd;
 
+    private String logo;
 
     private String description;
 }

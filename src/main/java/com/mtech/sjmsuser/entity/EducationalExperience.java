@@ -23,6 +23,9 @@ public class EducationalExperience {
     private String yearStart;
     private String yearEnd;
 
+    private String logo;
+
+    @Column(length = 512)
     private String description;
 
     // getters and setters

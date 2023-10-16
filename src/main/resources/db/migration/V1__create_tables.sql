@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS sjmsuser.working_experience
     year_start character varying(255) NOT NULL,
     year_end character varying(255) NOT NULL,
     job_title character varying(255) NOT NULL,
+    logo character varying(255) NOT NULL,
     experience character varying(512) NOT NULL
 );
 
@@ -27,6 +28,7 @@ CREATE TABLE IF NOT EXISTS sjmsuser.educational_experience
     school character varying(255) NOT NULL,
     year_start character varying(255) NOT NULL,
     year_end character varying(255) NOT NULL,
-    description character varying(255) NOT NULL
+    logo character varying(255) NOT NULL,
+    description character varying(512) NOT NULL
 );
 

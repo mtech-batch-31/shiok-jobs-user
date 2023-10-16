@@ -22,6 +22,10 @@ public class WorkingExperience {
     private String yearStart;
     private String yearEnd;
     private String jobTitle;
+
+    private String logo;
+
+    @Column(length = 512)
     private String experience;
 
     // getters and setters
