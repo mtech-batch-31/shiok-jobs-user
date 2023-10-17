@@ -20,7 +20,7 @@ public class UserProfileDto {
     private long id;
     private String accountUuid;
     private String name;
-    private String seeking;
+    private boolean seeking;
     private String jobTitle;
     private String image;
     private String about;
