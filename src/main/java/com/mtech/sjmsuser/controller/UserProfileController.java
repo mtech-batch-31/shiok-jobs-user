@@ -17,7 +17,7 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
-    @GetMapping("/api/v1/user/me")
+    @GetMapping("/v1/user/me")
     public ResponseEntity<UserProfileDto> verifyToken(@RequestHeader("user-id") String userId) {
 //            System.out.println("token " + token);
             UserProfileDto userProfileDto = userProfileService.findByAccountUuid(userId);
@@ -29,7 +29,7 @@ public class UserProfileController {
         }
     }
 
-    @PutMapping("/api/v1/user")
+    @PutMapping("/v1/user")
     public ResponseEntity<UserProfileDto> update(@RequestHeader("user-id") String accountUuid, @RequestBody UpdateUserDto updateUserDto) {
         UserProfileDto userProfileDto = userProfileService.updateUserProfile(accountUuid, updateUserDto);
         if (userProfileDto != null) {
