@@ -59,11 +59,11 @@ public class UserProfileServiceImpl implements UserProfileService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
         UserProfile userProfile = userProfileOptional.get();
-        userProfile.setSeeking(updateUserDto.isSeekingJob());
+        userProfile.setSeeking(updateUserDto.getSeekingJob());
         userProfileRepository.saveAndFlush(userProfile);
 
         // integration with AWS SQS
-        SnsUpdateUserDto snsUpdateUserDto = new SnsUpdateUserDto(accountUuid, updateUserDto.isSeekingJob());
+        SnsUpdateUserDto snsUpdateUserDto = new SnsUpdateUserDto(accountUuid, updateUserDto.getSeekingJob());
         String snsMessage;
         try {
             snsMessage = objectMapper.writeValueAsString(snsUpdateUserDto);

@@ -1,5 +1,6 @@
 package com.mtech.sjmsuser.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,5 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateUserDto {
 
-    private boolean seekingJob;
+    @NotNull (message = "seekingJob must not be null")
+    private Boolean seekingJob;
 }
