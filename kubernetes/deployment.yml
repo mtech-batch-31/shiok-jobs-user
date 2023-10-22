@@ -21,6 +21,13 @@ spec:
       containers:
         - name: sj-user
           image: ${IMAGE_NAME}
+          resources:
+            requests:
+              cpu: 150m
+              memory: 350Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
           env:
             - name: spring.datasource.url
               value: ${DATASOURCE_URL}
@@ -46,13 +53,7 @@ spec:
             - name: aws.sns.topic.arn.job-seeker-status-update
               value: ${SNS_TOPIC_ARN}
 
-          resources:
-            requests:
-              cpu: "150m"
-              memory: "250Mi"
-            limits:
-              cpu: "300m"
-              memory: "400Mi"
+
 
           imagePullPolicy: Always
           ports:
