@@ -45,11 +45,6 @@ public class UserProfileController {
         String userId = headers.getFirst("user-id");
         log.info("updateUser called with userId={}", userId);
         UserProfileDto userProfileDto = userProfileService.updateUserProfile(userId, updateUserDto);
-        if (userProfileDto != null) {
-            return ResponseEntity.ok(userProfileDto);
-        } else {
-            UserProfileDto errorResponse = new UserProfileDto();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
+        return ResponseEntity.ok(userProfileDto);
     }
 }
