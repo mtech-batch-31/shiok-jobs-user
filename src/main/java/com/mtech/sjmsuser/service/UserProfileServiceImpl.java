@@ -68,7 +68,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         try {
             snsMessage = objectMapper.writeValueAsString(snsUpdateUserDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error occurred while sending message to aws sns");
         }
         log.info("snsMessage sent: {}", snsMessage);
