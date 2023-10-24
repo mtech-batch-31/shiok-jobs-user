@@ -9,11 +9,11 @@ spec:
     kind: Deployment
     name: sj-user
   minReplicas: 1
-  maxReplicas: 10
+  maxReplicas: 5
   metrics:
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 90
+          averageValue: 200Mi

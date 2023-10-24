@@ -22,12 +22,8 @@ spec:
         - name: sj-user
           image: ${IMAGE_NAME}
           resources:
-            requests:
-              cpu: 100m
-              memory: 50Mi
             limits:
-              cpu: 150m
-              memory: 100Mi
+              memory: 256Mi
           env:
             - name: spring.datasource.url
               value: ${DATASOURCE_URL}
