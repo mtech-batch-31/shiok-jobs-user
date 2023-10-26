@@ -9,11 +9,11 @@ spec:
     kind: Deployment
     name: sj-user
   minReplicas: 1
-  maxReplicas: 7
+  maxReplicas: 5
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 70
+          averageUtilization: 90
