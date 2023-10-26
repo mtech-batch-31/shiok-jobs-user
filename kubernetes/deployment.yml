@@ -22,6 +22,9 @@ spec:
         - name: sj-user
           image: ${IMAGE_NAME}
           resources:
+            requests:
+              memory: 256Mi
+              cpu: 500m
             limits:
               memory: 256Mi
               cpu: 500m
