@@ -2,10 +2,12 @@ package com.mtech.sjmsuser.service;
 
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.model.PublishRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class SnsService {
 
@@ -16,6 +18,7 @@ public class SnsService {
     private String topicArn;
 
     public void sendMessageToSnsTopic(String message) {
+        log.info("snsMessage sent, topic: {}, message: {}", topicArn, message);
         PublishRequest request = new PublishRequest(topicArn, message);
         amazonSNS.publish(request);
     }

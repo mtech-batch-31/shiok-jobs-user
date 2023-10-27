@@ -72,7 +72,6 @@ public class UserProfileServiceImpl implements UserProfileService {
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error occurred while sending message to aws sns");
         }
-        log.info("snsMessage sent: {}", snsMessage);
         snsService.sendMessageToSnsTopic(snsMessage);
         return UserProfileMapper.INSTANCE.toDto(userProfile);
     }
