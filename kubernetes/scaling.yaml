@@ -9,11 +9,17 @@ spec:
     kind: Deployment
     name: sj-user
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 4
   metrics:
     - type: Resource
       resource:
-        name: memory
+        name: cpu
         target:
           type: Utilization
-          averageValue: 200Mi
+          averageUtilization: 90
+  behavior:
+    scaleDown:
+      policies:
+        - periodSeconds: 10
+          type: Pod
+          value: 1

@@ -9,7 +9,7 @@ metadata:
   namespace: sj-ns
   name: sj-user
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: sj-user
@@ -22,8 +22,12 @@ spec:
         - name: sj-user
           image: ${IMAGE_NAME}
           resources:
+            requests:
+              memory: 256Mi
+              cpu: 100m
             limits:
               memory: 256Mi
+              cpu: 100m
           env:
             - name: spring.datasource.url
               value: ${DATASOURCE_URL}
