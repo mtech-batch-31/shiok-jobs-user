@@ -109,6 +109,7 @@ private excludedClassFilesForReport(classDirectories) {
 		fileTree(dir: it, exclude: [
 				'**/entity/*.class',
 				'**/model/**/*.class',
+				'**/model/*.class',
 				'**/Application.class'
 		])
 	}))
