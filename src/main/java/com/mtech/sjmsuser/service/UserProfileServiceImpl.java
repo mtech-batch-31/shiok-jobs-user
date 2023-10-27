@@ -27,20 +27,6 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     private ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
-//    public UserProfileServiceImpl(UserProfileRepository userProfileRepository){
-//        this.userProfileRepository = userProfileRepository;
-//    }
-
-//    public UserProfileDto retrieveUserProfile(long id) {
-//        Optional<UserProfile> userProfile = this.userProfileRepository.findById(id);
-//        if(userProfile.isEmpty()) {
-//            return null;
-//        }
-//        return UserProfileMapper.INSTANCE.toDto(userProfile.get());
-//    }
-
-
-
     @Override
     public UserProfileDto findByAccountUuid(String accountUuid) {
         Optional<UserProfile> userProfileOptional = userProfileRepository.findByAccountUuid(accountUuid);
