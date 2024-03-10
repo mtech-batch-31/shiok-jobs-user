@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS sjmsuser.user_profile
     about character varying(512) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS sjmsuser.working_experience
+CREATE TABLE IF NOT EXISTS sjmsuser.work_experience
 (
     id serial PRIMARY KEY,
     profile_id bigint NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS sjmsuser.working_experience
     experience character varying(512) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS sjmsuser.educational_experience
+CREATE TABLE IF NOT EXISTS sjmsuser.education
 (
     id serial PRIMARY KEY,
     profile_id bigint NOT NULL,

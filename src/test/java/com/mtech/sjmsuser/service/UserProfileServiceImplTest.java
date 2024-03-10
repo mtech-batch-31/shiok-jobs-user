@@ -1,8 +1,8 @@
 package com.mtech.sjmsuser.service;
 
-import com.mtech.sjmsuser.entity.EducationalExperience;
+import com.mtech.sjmsuser.entity.Education;
 import com.mtech.sjmsuser.entity.UserProfile;
-import com.mtech.sjmsuser.entity.WorkingExperience;
+import com.mtech.sjmsuser.entity.WorkExperience;
 import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
@@ -38,7 +38,7 @@ public class UserProfileServiceImplTest {
     @Test
     public void testFindByAccountUuid() {
         // Create a UserProfile instance for testing
-        var workingExperience = new WorkingExperience();
+        var workingExperience = new WorkExperience();
         workingExperience.setLogo("logo");
         workingExperience.setExperience("experience");
         workingExperience.setJobTitle("jobTitle");
@@ -47,10 +47,10 @@ public class UserProfileServiceImplTest {
         workingExperience.setCompany("company");
         workingExperience.setId(2L);
 
-        var workingExperiences = new ArrayList<WorkingExperience>();
+        var workingExperiences = new ArrayList<WorkExperience>();
         workingExperiences.add(workingExperience);
 
-        var educationalExperience = new EducationalExperience();
+        var educationalExperience = new Education();
         educationalExperience.setId(1L);
         educationalExperience.setLogo("logo");
         educationalExperience.setDescription("description");
@@ -59,7 +59,7 @@ public class UserProfileServiceImplTest {
         educationalExperience.setYearEnd("end");
 
 
-        var educationalExperiences = new ArrayList<EducationalExperience>();
+        var educationalExperiences = new ArrayList<Education>();
         educationalExperiences.add(educationalExperience);
 
         UserProfile userProfile = new UserProfile();
@@ -68,8 +68,8 @@ public class UserProfileServiceImplTest {
         userProfile.setId(1L);
         userProfile.setAbout("about");
         userProfile.setImage("image");
-        userProfile.setEducationalExperience(educationalExperiences);
-        userProfile.setWorkingExperience(workingExperiences);
+        userProfile.setEducation(educationalExperiences);
+        userProfile.setWorkExperience(workingExperiences);
         userProfile.setJobTitle("jobTitle");
         userProfile.setName("name");
 
@@ -90,24 +90,24 @@ public class UserProfileServiceImplTest {
         Assertions.assertEquals(userProfile.getAbout(), result.getAbout());
         Assertions.assertEquals(userProfile.getJobTitle(), result.getJobTitle());
 
-        Assertions.assertNotNull(result.getEducationalExperience());
-        Assertions.assertEquals(userProfile.getEducationalExperience().size(), result.getEducationalExperience().size());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getId(), result.getEducationalExperience().get(0).getId());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getSchool(), result.getEducationalExperience().get(0).getSchool());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getLogo(), result.getEducationalExperience().get(0).getLogo());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getYearStart(), result.getEducationalExperience().get(0).getYearStart());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getYearEnd(), result.getEducationalExperience().get(0).getYearEnd());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getDescription(), result.getEducationalExperience().get(0).getDescription());
+        Assertions.assertNotNull(result.getEducation());
+        Assertions.assertEquals(userProfile.getEducation().size(), result.getEducation().size());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getId(), result.getEducation().get(0).getId());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getSchool(), result.getEducation().get(0).getSchool());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getLogo(), result.getEducation().get(0).getLogo());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getYearStart(), result.getEducation().get(0).getYearStart());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getYearEnd(), result.getEducation().get(0).getYearEnd());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getDescription(), result.getEducation().get(0).getDescription());
 
-        Assertions.assertNotNull(result.getWorkingExperience());
-        Assertions.assertEquals(userProfile.getWorkingExperience().size(), result.getWorkingExperience().size());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getId(), result.getWorkingExperience().get(0).getId());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getCompany(), result.getWorkingExperience().get(0).getCompany());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getLogo(), result.getWorkingExperience().get(0).getLogo());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getYearStart(), result.getWorkingExperience().get(0).getYearStart());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getYearEnd(), result.getWorkingExperience().get(0).getYearEnd());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getExperience(), result.getWorkingExperience().get(0).getExperience());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getJobTitle(), result.getWorkingExperience().get(0).getJobTitle());
+        Assertions.assertNotNull(result.getWorkExperience());
+        Assertions.assertEquals(userProfile.getWorkExperience().size(), result.getWorkExperience().size());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getId(), result.getWorkExperience().get(0).getId());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getCompany(), result.getWorkExperience().get(0).getCompany());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getLogo(), result.getWorkExperience().get(0).getLogo());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getYearStart(), result.getWorkExperience().get(0).getYearStart());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getYearEnd(), result.getWorkExperience().get(0).getYearEnd());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getExperience(), result.getWorkExperience().get(0).getExperience());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getJobTitle(), result.getWorkExperience().get(0).getJobTitle());
     }
 
     @Test

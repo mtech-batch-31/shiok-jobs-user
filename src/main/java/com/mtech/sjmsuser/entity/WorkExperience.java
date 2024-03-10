@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkingExperience {
+public class WorkExperience {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "profile_id", nullable = false)
     private UserProfile userProfile;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-//    private BigInteger profileId;
+
     private String company;
     private String yearStart;
     private String yearEnd;
@@ -29,4 +29,19 @@ public class WorkingExperience {
     private String experience;
 
     // getters and setters
+
+
+    @Override
+    public String toString() {
+        return "WorkExperience{" +
+                "userProfile=" + userProfile.getId() +
+                ", Id=" + Id +
+                ", company='" + company + '\'' +
+                ", yearStart='" + yearStart + '\'' +
+                ", yearEnd='" + yearEnd + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", logo='" + logo + '\'' +
+                ", experience='" + experience + '\'' +
+                '}';
+    }
 }

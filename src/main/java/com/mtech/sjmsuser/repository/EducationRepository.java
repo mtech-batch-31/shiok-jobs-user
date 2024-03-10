@@ -1,13 +1,15 @@
 package com.mtech.sjmsuser.repository;
 
+import com.mtech.sjmsuser.entity.Education;
 import com.mtech.sjmsuser.entity.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+
 import java.util.UUID;
 
-public interface UserProfileRepository extends JpaRepository<UserProfile, UUID> {
+public interface EducationRepository extends JpaRepository<Education, UUID> {
 //    Optional<UserProfile> findById(long id);
 
-    Optional<UserProfile> findByAccountUuid(String accountUuid);
+//    @Modifying
+    int deleteByUserProfile(UserProfile userProfile);
 
 }
