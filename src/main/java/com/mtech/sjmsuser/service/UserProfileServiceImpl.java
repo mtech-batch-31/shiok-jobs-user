@@ -110,7 +110,6 @@ public class UserProfileServiceImpl implements UserProfileService {
             newUserProfile.setEducation(education);
         }
 
-
         updateJobSeekingStatusSNS(newUserProfile.getAccountUuid(), newUserProfile.isSeeking());
         UserProfile updatedUserProfile = userProfileRepository.saveAndFlush(newUserProfile);
         log.info(String.valueOf(updatedUserProfile));

@@ -5,7 +5,9 @@ import com.mtech.sjmsuser.entity.UserProfile;
 import com.mtech.sjmsuser.entity.WorkExperience;
 import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
+import com.mtech.sjmsuser.repository.EducationRepository;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
+import com.mtech.sjmsuser.repository.WorkExperienceRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +19,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
-public class UserProfileServiceImplTest {
+class UserProfileServiceImplTest {
 
     @InjectMocks
     private UserProfileServiceImpl userProfileService;
@@ -27,16 +33,22 @@ public class UserProfileServiceImplTest {
     private UserProfileRepository userProfileRepository;
 
     @Mock
+    private EducationRepository educationRepository;
+
+    @Mock
+    private WorkExperienceRepository workExperienceRepository;
+
+    @Mock
     private SnsService snsService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     // Write tests for findByAccountUuid method
     @Test
-    public void testFindByAccountUuid() {
+    void testFindByAccountUuid() {
         // Create a UserProfile instance for testing
         var workingExperience = new WorkExperience();
         workingExperience.setLogo("logo");
@@ -111,7 +123,7 @@ public class UserProfileServiceImplTest {
     }
 
     @Test
-    public void testFindByAccountUuid_UserProfileDoesNotExist() {
+    void testFindByAccountUuid_UserProfileDoesNotExist() {
         // Create a UserProfile instance for testing
         UserProfile userProfile = new UserProfile();
         userProfile.setAccountUuid("testAccountUuid");
@@ -125,7 +137,7 @@ public class UserProfileServiceImplTest {
 
     // Write tests for updateUserProfile method
     @Test
-    public void testUpdateUserProfile() {
+    void testUpdateUserProfile() {
         // Create a UserProfile instance for testing
         UserProfile userProfile = new UserProfile();
         userProfile.setAccountUuid("testAccountUuid");
@@ -151,7 +163,7 @@ public class UserProfileServiceImplTest {
     }
 
     @Test
-    public void testUpdateUserProfile_UserProfileDoesNotExist_ThrowException() {
+    void testUpdateUserProfile_UserProfileDoesNotExist_ThrowException() {
         // Create a UserProfile instance for testing
         UserProfile userProfile = new UserProfile();
         userProfile.setAccountUuid("testAccountUuid");
@@ -169,5 +181,40 @@ public class UserProfileServiceImplTest {
 
         Assertions.assertThrows(ResponseStatusException.class, () -> userProfileService.updateUserProfile("testAccountUuid", updateUserDto));
 
+    }
+
+    @Test
+    void testSaveUserProfile() {
+        // Mock UserProfileDto
+        UserProfileDto userProfileDto = new UserProfileDto();
+        userProfileDto.setAccountUuid("accountUuid");
+        // Populate userProfileDto with necessary fields
+
+        // Mock UserProfile and UserProfileOptional
+        UserProfile oldUserProfile = new UserProfile();
+        oldUserProfile.setId(1L);
+        oldUserProfile.setAccountUuid("accountUuid");
+        // Populate oldUserProfile with necessary fields
+        Optional<UserProfile> userProfileOptional = Optional.of(oldUserProfile);
+
+        // expected dto
+        UserProfileDto expectedUserProfileDto = new UserProfileDto();
+        expectedUserProfileDto.setId(1L);
+        expectedUserProfileDto.setAccountUuid("accountUuid");
+
+        // Mock repositories behavior
+        when(userProfileRepository.findByAccountUuid(any())).thenReturn(userProfileOptional);
+        when(userProfileRepository.saveAndFlush(any())).thenReturn(oldUserProfile);
+
+        // Call the method under test
+        UserProfileDto resultUserProfileDto = userProfileService.saveUserProfile(userProfileDto);
+
+        // Asserts or verifications based on the behavior of the method
+        // For example:
+        // Verify that findByAccountUuid was called once
+        verify(userProfileRepository, times(1)).findByAccountUuid(any());
+
+        // Assert that the returned UserProfileDto matches expectations
+        Assertions.assertEquals (expectedUserProfileDto, resultUserProfileDto);
     }
 }
