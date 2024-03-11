@@ -15,6 +15,7 @@ import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
 import com.mtech.sjmsuser.repository.EducationRepository;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
+import com.mtech.sjmsuser.repository.WorkExperienceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Autowired
     private EducationRepository educationRepository;
+
+    @Autowired
+    private WorkExperienceRepository workExperienceRepository;
+
     @Autowired
     private SnsService snsService;
 
@@ -77,6 +82,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             UserProfile oldUserProfile = userProfileOptional.get();
             newUserProfile.setId(oldUserProfile.getId());
             educationRepository.deleteByUserProfile(oldUserProfile);
+            workExperienceRepository.deleteByUserProfile(oldUserProfile);
         }
 
         //
