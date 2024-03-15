@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -45,4 +46,15 @@ public class UserProfileController {
         UserProfileDto userProfileDto = userProfileService.updateUserProfile(userId, updateUserDto);
         return ResponseEntity.ok(userProfileDto);
     }
+
+    @PostMapping("/v1/user")
+    public ResponseEntity<UserProfileDto> saveUser(@RequestHeader HttpHeaders headers, @Validated @RequestBody UserProfileDto userProfileDto) {
+        log.info("updateUser called with headers={},body={}",headers, userProfileDto);
+        String userId = headers.getFirst("user-id");
+        log.info("updateUser called with userId={}", userId);
+        userProfileDto.setAccountUuid(userId);
+        UserProfileDto createdUserProfileDto = userProfileService.saveUserProfile(userProfileDto);
+        return ResponseEntity.ok(createdUserProfileDto);
+    }
+
 }

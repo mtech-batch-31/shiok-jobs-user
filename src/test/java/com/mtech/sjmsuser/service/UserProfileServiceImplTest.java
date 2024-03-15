@@ -1,11 +1,13 @@
 package com.mtech.sjmsuser.service;
 
-import com.mtech.sjmsuser.entity.EducationalExperience;
+import com.mtech.sjmsuser.entity.Education;
 import com.mtech.sjmsuser.entity.UserProfile;
-import com.mtech.sjmsuser.entity.WorkingExperience;
+import com.mtech.sjmsuser.entity.WorkExperience;
 import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
+import com.mtech.sjmsuser.repository.EducationRepository;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
+import com.mtech.sjmsuser.repository.WorkExperienceRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +19,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
-public class UserProfileServiceImplTest {
+class UserProfileServiceImplTest {
 
     @InjectMocks
     private UserProfileServiceImpl userProfileService;
@@ -27,18 +33,24 @@ public class UserProfileServiceImplTest {
     private UserProfileRepository userProfileRepository;
 
     @Mock
+    private EducationRepository educationRepository;
+
+    @Mock
+    private WorkExperienceRepository workExperienceRepository;
+
+    @Mock
     private SnsService snsService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     // Write tests for findByAccountUuid method
     @Test
-    public void testFindByAccountUuid() {
+    void testFindByAccountUuid() {
         // Create a UserProfile instance for testing
-        var workingExperience = new WorkingExperience();
+        var workingExperience = new WorkExperience();
         workingExperience.setLogo("logo");
         workingExperience.setExperience("experience");
         workingExperience.setJobTitle("jobTitle");
@@ -47,10 +59,10 @@ public class UserProfileServiceImplTest {
         workingExperience.setCompany("company");
         workingExperience.setId(2L);
 
-        var workingExperiences = new ArrayList<WorkingExperience>();
+        var workingExperiences = new ArrayList<WorkExperience>();
         workingExperiences.add(workingExperience);
 
-        var educationalExperience = new EducationalExperience();
+        var educationalExperience = new Education();
         educationalExperience.setId(1L);
         educationalExperience.setLogo("logo");
         educationalExperience.setDescription("description");
@@ -59,7 +71,7 @@ public class UserProfileServiceImplTest {
         educationalExperience.setYearEnd("end");
 
 
-        var educationalExperiences = new ArrayList<EducationalExperience>();
+        var educationalExperiences = new ArrayList<Education>();
         educationalExperiences.add(educationalExperience);
 
         UserProfile userProfile = new UserProfile();
@@ -68,8 +80,8 @@ public class UserProfileServiceImplTest {
         userProfile.setId(1L);
         userProfile.setAbout("about");
         userProfile.setImage("image");
-        userProfile.setEducationalExperience(educationalExperiences);
-        userProfile.setWorkingExperience(workingExperiences);
+        userProfile.setEducation(educationalExperiences);
+        userProfile.setWorkExperience(workingExperiences);
         userProfile.setJobTitle("jobTitle");
         userProfile.setName("name");
 
@@ -90,28 +102,28 @@ public class UserProfileServiceImplTest {
         Assertions.assertEquals(userProfile.getAbout(), result.getAbout());
         Assertions.assertEquals(userProfile.getJobTitle(), result.getJobTitle());
 
-        Assertions.assertNotNull(result.getEducationalExperience());
-        Assertions.assertEquals(userProfile.getEducationalExperience().size(), result.getEducationalExperience().size());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getId(), result.getEducationalExperience().get(0).getId());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getSchool(), result.getEducationalExperience().get(0).getSchool());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getLogo(), result.getEducationalExperience().get(0).getLogo());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getYearStart(), result.getEducationalExperience().get(0).getYearStart());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getYearEnd(), result.getEducationalExperience().get(0).getYearEnd());
-        Assertions.assertEquals(userProfile.getEducationalExperience().get(0).getDescription(), result.getEducationalExperience().get(0).getDescription());
+        Assertions.assertNotNull(result.getEducation());
+        Assertions.assertEquals(userProfile.getEducation().size(), result.getEducation().size());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getId(), result.getEducation().get(0).getId());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getSchool(), result.getEducation().get(0).getSchool());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getLogo(), result.getEducation().get(0).getLogo());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getYearStart(), result.getEducation().get(0).getYearStart());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getYearEnd(), result.getEducation().get(0).getYearEnd());
+        Assertions.assertEquals(userProfile.getEducation().get(0).getDescription(), result.getEducation().get(0).getDescription());
 
-        Assertions.assertNotNull(result.getWorkingExperience());
-        Assertions.assertEquals(userProfile.getWorkingExperience().size(), result.getWorkingExperience().size());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getId(), result.getWorkingExperience().get(0).getId());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getCompany(), result.getWorkingExperience().get(0).getCompany());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getLogo(), result.getWorkingExperience().get(0).getLogo());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getYearStart(), result.getWorkingExperience().get(0).getYearStart());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getYearEnd(), result.getWorkingExperience().get(0).getYearEnd());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getExperience(), result.getWorkingExperience().get(0).getExperience());
-        Assertions.assertEquals(userProfile.getWorkingExperience().get(0).getJobTitle(), result.getWorkingExperience().get(0).getJobTitle());
+        Assertions.assertNotNull(result.getWorkExperience());
+        Assertions.assertEquals(userProfile.getWorkExperience().size(), result.getWorkExperience().size());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getId(), result.getWorkExperience().get(0).getId());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getCompany(), result.getWorkExperience().get(0).getCompany());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getLogo(), result.getWorkExperience().get(0).getLogo());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getYearStart(), result.getWorkExperience().get(0).getYearStart());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getYearEnd(), result.getWorkExperience().get(0).getYearEnd());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getExperience(), result.getWorkExperience().get(0).getExperience());
+        Assertions.assertEquals(userProfile.getWorkExperience().get(0).getJobTitle(), result.getWorkExperience().get(0).getJobTitle());
     }
 
     @Test
-    public void testFindByAccountUuid_UserProfileDoesNotExist() {
+    void testFindByAccountUuid_UserProfileDoesNotExist() {
         // Create a UserProfile instance for testing
         UserProfile userProfile = new UserProfile();
         userProfile.setAccountUuid("testAccountUuid");
@@ -125,7 +137,7 @@ public class UserProfileServiceImplTest {
 
     // Write tests for updateUserProfile method
     @Test
-    public void testUpdateUserProfile() {
+    void testUpdateUserProfile() {
         // Create a UserProfile instance for testing
         UserProfile userProfile = new UserProfile();
         userProfile.setAccountUuid("testAccountUuid");
@@ -151,7 +163,7 @@ public class UserProfileServiceImplTest {
     }
 
     @Test
-    public void testUpdateUserProfile_UserProfileDoesNotExist_ThrowException() {
+    void testUpdateUserProfile_UserProfileDoesNotExist_ThrowException() {
         // Create a UserProfile instance for testing
         UserProfile userProfile = new UserProfile();
         userProfile.setAccountUuid("testAccountUuid");
@@ -169,5 +181,40 @@ public class UserProfileServiceImplTest {
 
         Assertions.assertThrows(ResponseStatusException.class, () -> userProfileService.updateUserProfile("testAccountUuid", updateUserDto));
 
+    }
+
+    @Test
+    void testSaveUserProfile() {
+        // Mock UserProfileDto
+        UserProfileDto userProfileDto = new UserProfileDto();
+        userProfileDto.setAccountUuid("accountUuid");
+        // Populate userProfileDto with necessary fields
+
+        // Mock UserProfile and UserProfileOptional
+        UserProfile oldUserProfile = new UserProfile();
+        oldUserProfile.setId(1L);
+        oldUserProfile.setAccountUuid("accountUuid");
+        // Populate oldUserProfile with necessary fields
+        Optional<UserProfile> userProfileOptional = Optional.of(oldUserProfile);
+
+        // expected dto
+        UserProfileDto expectedUserProfileDto = new UserProfileDto();
+        expectedUserProfileDto.setId(1L);
+        expectedUserProfileDto.setAccountUuid("accountUuid");
+
+        // Mock repositories behavior
+        when(userProfileRepository.findByAccountUuid(any())).thenReturn(userProfileOptional);
+        when(userProfileRepository.saveAndFlush(any())).thenReturn(oldUserProfile);
+
+        // Call the method under test
+        UserProfileDto resultUserProfileDto = userProfileService.saveUserProfile(userProfileDto);
+
+        // Asserts or verifications based on the behavior of the method
+        // For example:
+        // Verify that findByAccountUuid was called once
+        verify(userProfileRepository, times(1)).findByAccountUuid(any());
+
+        // Assert that the returned UserProfileDto matches expectations
+        Assertions.assertEquals (expectedUserProfileDto, resultUserProfileDto);
     }
 }

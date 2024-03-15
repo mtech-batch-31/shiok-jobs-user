@@ -14,7 +14,7 @@ import java.util.List;
 public class UserProfile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String accountUuid;
     private String name;
@@ -25,9 +25,9 @@ public class UserProfile {
     private String about;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userProfile")
-    private List<WorkingExperience> workingExperience;
+    private List<WorkExperience> workExperience;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userProfile")
-    private List<EducationalExperience> educationalExperience;
+    private List<Education> education;
 
 }

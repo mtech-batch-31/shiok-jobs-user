@@ -9,4 +9,5 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, UUID> 
 //    Optional<UserProfile> findById(long id);
 
     Optional<UserProfile> findByAccountUuid(String accountUuid);
+
 }
