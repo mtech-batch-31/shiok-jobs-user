@@ -57,4 +57,8 @@ public class UserProfileController {
         return ResponseEntity.ok(createdUserProfileDto);
     }
 
+    @GetMapping("/test")
+    public ResponseEntity test() {
+        return ResponseEntity.ok("OK");
+    }
 }
