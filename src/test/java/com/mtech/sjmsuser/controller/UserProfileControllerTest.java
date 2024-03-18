@@ -42,7 +42,7 @@ class UserProfileControllerTest {
 
     @Test
     void giveSeekingJobStatus_return200Response() throws Exception{
-        mockMvc.perform(put("/v1/user")
+        mockMvc.perform(put("/v1/users")
                 .header("user-id", UUID.randomUUID())
                 .contentType(ContentType.APPLICATION_JSON.toString())
                 .content("{\"seekingJob\":false}"))
@@ -56,7 +56,7 @@ class UserProfileControllerTest {
 
         Mockito.when(userProfileService.findByAccountUuid(userId.toString())).thenReturn(userProfile);
 
-        mockMvc.perform(get("/v1/user/me")
+        mockMvc.perform(get("/v1/users/me")
                         .header("user-id", userId)
                         .contentType(ContentType.APPLICATION_JSON.toString()))
                 .andExpect(status().isOk());
@@ -66,7 +66,7 @@ class UserProfileControllerTest {
     void givenUserProfileIsNotFound_return400Response() throws Exception{
         var userId = UUID.randomUUID();
 
-        mockMvc.perform(get("/v1/user/me")
+        mockMvc.perform(get("/v1/users/me")
                         .header("user-id", userId)
                         .contentType(ContentType.APPLICATION_JSON.toString()))
                 .andExpect(status().isNotFound());
@@ -76,7 +76,7 @@ class UserProfileControllerTest {
     void givenGetUserProfileThrowsUnexpectedException_return400Response() throws Exception{
         var userId = UUID.randomUUID();
 
-        mockMvc.perform(get("/v1/user/me")
+        mockMvc.perform(get("/v1/users/me")
                         .header("user-id", userId)
                         .contentType(ContentType.APPLICATION_JSON.toString()))
                 .andExpect(status().isNotFound());
@@ -104,7 +104,7 @@ class UserProfileControllerTest {
         Mockito.when(userProfileService.saveUserProfile(Mockito.any())).thenReturn(savedUserProfileDto);
 
         // Perform POST request
-        mockMvc.perform(post("/v1/user")
+        mockMvc.perform(post("/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userProfileJson)
                         .headers(headers))

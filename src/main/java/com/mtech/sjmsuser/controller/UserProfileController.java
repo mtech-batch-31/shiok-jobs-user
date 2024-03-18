@@ -8,16 +8,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
 @RestController
+@RequestMapping("/v1/users")
 public class UserProfileController {
 
     private final UserProfileService userProfileService; // Inject the service
@@ -26,7 +22,7 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
-    @GetMapping("/v1/user/me")
+    @GetMapping("/me")
     public ResponseEntity<UserProfileDto> getUserProfile(@RequestHeader("user-id") String userId) {
             log.info("getUserProfile called with userId " + userId);
             UserProfileDto userProfileDto = userProfileService.findByAccountUuid(userId);
@@ -38,7 +34,7 @@ public class UserProfileController {
         }
     }
 
-    @PutMapping("/v1/user")
+    @PutMapping
     public ResponseEntity<UserProfileDto> updateUser(@RequestHeader HttpHeaders headers, @Validated @RequestBody UpdateUserDto updateUserDto) {
         log.info("updateUser called with headers={},body={}",headers,updateUserDto);
         String userId = headers.getFirst("user-id");
@@ -47,7 +43,7 @@ public class UserProfileController {
         return ResponseEntity.ok(userProfileDto);
     }
 
-    @PostMapping("/v1/user")
+    @PostMapping
     public ResponseEntity<UserProfileDto> saveUser(@RequestHeader HttpHeaders headers, @Validated @RequestBody UserProfileDto userProfileDto) {
         log.info("updateUser called with headers={},body={}",headers, userProfileDto);
         String userId = headers.getFirst("user-id");
