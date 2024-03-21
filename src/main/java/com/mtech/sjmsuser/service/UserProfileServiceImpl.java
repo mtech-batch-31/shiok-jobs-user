@@ -112,7 +112,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         updateJobSeekingStatusSNS(newUserProfile.getAccountUuid(), newUserProfile.isSeeking());
         UserProfile updatedUserProfile = userProfileRepository.saveAndFlush(newUserProfile);
-        log.info(String.valueOf(updatedUserProfile));
+        log.debug(updatedUserProfile.toString());
         return UserProfileMapper.INSTANCE.toDto(userProfileRepository.saveAndFlush(newUserProfile));
     }
 

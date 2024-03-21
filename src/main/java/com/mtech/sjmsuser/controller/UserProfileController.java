@@ -24,7 +24,7 @@ public class UserProfileController {
 
     @GetMapping("/me")
     public ResponseEntity<UserProfileDto> getUserProfile(@RequestHeader("user-id") String userId) {
-            log.info("getUserProfile called with userId " + userId);
+        log.debug("getUserProfile called with userId " + userId);
             UserProfileDto userProfileDto = userProfileService.findByAccountUuid(userId);
         if (userProfileDto != null) {
             return ResponseEntity.ok(userProfileDto);
@@ -36,18 +36,18 @@ public class UserProfileController {
 
     @PutMapping
     public ResponseEntity<UserProfileDto> updateUser(@RequestHeader HttpHeaders headers, @Validated @RequestBody UpdateUserDto updateUserDto) {
-        log.info("updateUser called with headers={},body={}",headers,updateUserDto);
+        log.debug("updateUser called with headers={},body={}",headers,updateUserDto);
         String userId = headers.getFirst("user-id");
-        log.info("updateUser called with userId={}", userId);
+        log.debug("updateUser called with userId={}", userId);
         UserProfileDto userProfileDto = userProfileService.updateUserProfile(userId, updateUserDto);
         return ResponseEntity.ok(userProfileDto);
     }
 
     @PostMapping
     public ResponseEntity<UserProfileDto> saveUser(@RequestHeader HttpHeaders headers, @Validated @RequestBody UserProfileDto userProfileDto) {
-        log.info("updateUser called with headers={},body={}",headers, userProfileDto);
+        log.debug("saveUser called with headers={},body={}",headers, userProfileDto);
         String userId = headers.getFirst("user-id");
-        log.info("updateUser called with userId={}", userId);
+        log.debug("saveUser called with userId={}", userId);
         userProfileDto.setAccountUuid(userId);
         UserProfileDto createdUserProfileDto = userProfileService.saveUserProfile(userProfileDto);
         return ResponseEntity.ok(createdUserProfileDto);
