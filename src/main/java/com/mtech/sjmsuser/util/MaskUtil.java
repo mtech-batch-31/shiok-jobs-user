@@ -3,6 +3,7 @@ package com.mtech.sjmsuser.util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class MaskUtil {
 
             return objectMapper.writeValueAsString(rootNode);
         } catch (Exception e) {
-            log.info("Error masking value: {}", e.getMessage());
+            log.info("Error masking value: {}", ExceptionUtils.getStackTrace(e));
             return jsonInput; // Return original JSON input if masking fails
         }
     }
