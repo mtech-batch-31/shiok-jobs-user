@@ -14,7 +14,5 @@ public class MaskUtilTest {
         String expectedValue = "{\"name\":\"\",\"email\":\"\"}";
 
         Assertions.assertEquals(expectedValue, maskedValue);
-
-        System.out.println(input);
     }
 }
