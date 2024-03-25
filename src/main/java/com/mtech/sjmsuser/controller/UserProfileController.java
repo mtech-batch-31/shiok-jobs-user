@@ -52,9 +52,4 @@ public class UserProfileController {
         UserProfileDto createdUserProfileDto = userProfileService.saveUserProfile(userProfileDto);
         return ResponseEntity.ok(createdUserProfileDto);
     }
-
-    @GetMapping("/test")
-    public ResponseEntity test() {
-        return ResponseEntity.ok("OK");
-    }
 }

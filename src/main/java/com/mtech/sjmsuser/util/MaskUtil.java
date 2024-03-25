@@ -7,14 +7,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class MaskUtil {
+
+    private static final Pattern pattern = Pattern.compile(".");
 
     public static String applyMask(String input){
         // Mask the values of the sensitive fields
         List<String> sensitiveFields = Arrays.asList("name", "email");
-        String maskedInput = maskSensitiveFields(input, sensitiveFields);
-        return maskedInput;
+        return maskSensitiveFields(input, sensitiveFields);
     }
 
 
@@ -46,6 +48,6 @@ public class MaskUtil {
 
     public static String maskString(String str) {
         // Replace characters in the string with asterisks
-        return str.replaceAll(".", "*");
+        return pattern.matcher(str).replaceAll("");
     }
 }
