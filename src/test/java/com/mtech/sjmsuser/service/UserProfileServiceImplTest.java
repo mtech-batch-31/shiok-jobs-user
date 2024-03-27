@@ -35,6 +35,12 @@ class UserProfileServiceImplTest {
     private UserProfileRepository userProfileRepository;
 
     @Mock
+    private EducationRepository educationRepository;
+
+    @Mock
+    private WorkExperienceRepository workExperienceRepository;
+
+    @Mock
     private SnsService snsService;
 
     @BeforeEach
