@@ -263,6 +263,10 @@ class UserProfileServiceImplTest {
         UserProfile oldUserProfile = getUserProfile();
         oldUserProfile.setId(1L);
         oldUserProfile.setAccountUuid("accountUuid");
+
+        UserProfile expectedOldUserProfile = getUserProfile();
+        expectedOldUserProfile.setId(1L);
+        expectedOldUserProfile.setAccountUuid("accountUuid");
         // Populate oldUserProfile with necessary fields
         Optional<UserProfile> userProfileOptional = Optional.of(oldUserProfile);
 
@@ -291,5 +295,22 @@ class UserProfileServiceImplTest {
 
         // Assert that the returned UserProfileDto matches expectations
         Assertions.assertEquals(expectedUserProfileDto, resultUserProfileDto);
+
+        Assertions.assertEquals(expectedOldUserProfile.getEducation().get(0).getDescription(), oldUserProfile.getEducation().get(0).getDescription());
+        Assertions.assertEquals(expectedOldUserProfile.getEducation().get(0).getId(), 1L);
+        Assertions.assertEquals(expectedOldUserProfile.getEducation().get(0).getLogo(), oldUserProfile.getEducation().get(0).getLogo());
+        Assertions.assertEquals(expectedOldUserProfile.getEducation().get(0).getSchool(), oldUserProfile.getEducation().get(0).getSchool());
+        Assertions.assertEquals(expectedOldUserProfile.getEducation().get(0).getYearEnd(), oldUserProfile.getEducation().get(0).getYearEnd());
+        Assertions.assertEquals(expectedOldUserProfile.getEducation().get(0).getYearStart(), oldUserProfile.getEducation().get(0).getYearStart());
+        Assertions.assertNull(expectedOldUserProfile.getEducation().get(0).getUserProfile());
+
+        Assertions.assertEquals(expectedOldUserProfile.getWorkExperience().get(0).getExperience(), oldUserProfile.getWorkExperience().get(0).getExperience());
+        Assertions.assertEquals(expectedOldUserProfile.getWorkExperience().get(0).getCompany(), oldUserProfile.getWorkExperience().get(0).getCompany());
+        Assertions.assertEquals(expectedOldUserProfile.getWorkExperience().get(0).getLogo(), oldUserProfile.getWorkExperience().get(0).getLogo());
+        Assertions.assertEquals(expectedOldUserProfile.getWorkExperience().get(0).getId(), 2L);
+        Assertions.assertEquals(expectedOldUserProfile.getWorkExperience().get(0).getJobTitle(), oldUserProfile.getWorkExperience().get(0).getJobTitle());
+        Assertions.assertEquals(expectedOldUserProfile.getWorkExperience().get(0).getYearEnd(), oldUserProfile.getWorkExperience().get(0).getYearEnd());
+        Assertions.assertEquals(expectedOldUserProfile.getWorkExperience().get(0).getYearStart(), oldUserProfile.getWorkExperience().get(0).getYearStart());
+        Assertions.assertNull(expectedOldUserProfile.getWorkExperience().get(0).getUserProfile());
     }
 }
