@@ -1,5 +1,6 @@
 package com.mtech.sjmsuser.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mtech.sjmsuser.entity.Education;
 import com.mtech.sjmsuser.entity.UserProfile;
 import com.mtech.sjmsuser.entity.WorkExperience;
@@ -21,10 +22,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+
+import static org.mockito.Mockito.*;
 
 class UserProfileServiceImplTest {
 
@@ -313,4 +312,5 @@ class UserProfileServiceImplTest {
         Assertions.assertEquals(expectedOldUserProfile.getWorkExperience().get(0).getYearStart(), oldUserProfile.getWorkExperience().get(0).getYearStart());
         Assertions.assertNull(expectedOldUserProfile.getWorkExperience().get(0).getUserProfile());
     }
+
 }

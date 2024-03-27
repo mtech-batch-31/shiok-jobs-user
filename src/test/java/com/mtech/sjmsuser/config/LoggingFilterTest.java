@@ -1,6 +1,7 @@
 package com.mtech.sjmsuser.config;
 
 import jakarta.servlet.ServletException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockFilterChain;
@@ -11,6 +12,7 @@ import javax.swing.text.StringContent;
 import java.io.IOException;
 
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 public class LoggingFilterTest {
     private final LoggingFilter loggingFilter = Mockito.spy(new LoggingFilter());
@@ -20,6 +22,21 @@ public class LoggingFilterTest {
 
         MockHttpServletRequest req = new MockHttpServletRequest();
         req.addHeader("test", "test");
+
+
+        req.setContent("hello".getBytes());
+        MockHttpServletResponse res = new MockHttpServletResponse();
+        MockFilterChain chain = new MockFilterChain();
+        loggingFilter.doFilter(req, res, chain);
+        Mockito.verify(loggingFilter, times(1)).doFilter(Mockito.eq(req), Mockito.eq(res), Mockito.eq(chain));
+    }
+
+    @Test
+    public void testDoFilter_ThrowsIOException() throws IOException, ServletException {
+
+        MockHttpServletRequest req = new MockHttpServletRequest();
+        req.addHeader("test", "test");
+
 
         req.setContent("hello".getBytes());
         MockHttpServletResponse res = new MockHttpServletResponse();

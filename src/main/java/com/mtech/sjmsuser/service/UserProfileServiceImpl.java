@@ -66,7 +66,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfileRepository.saveAndFlush(userProfile);
 
         // integration with AWS SQS
-        updateJobSeekingStatusSNS(accountUuid, updateUserDto.getSeekingJob());
+        //updateJobSeekingStatusSNS(accountUuid, updateUserDto.getSeekingJob());
         return UserProfileMapper.INSTANCE.toDto(userProfile);
     }
 
@@ -110,26 +110,26 @@ public class UserProfileServiceImpl implements UserProfileService {
             newUserProfile.setEducation(education);
         }
 
-        updateJobSeekingStatusSNS(newUserProfile.getAccountUuid(), newUserProfile.isSeeking());
+        //updateJobSeekingStatusSNS(newUserProfile.getAccountUuid(), newUserProfile.isSeeking());
         UserProfile updatedUserProfile = userProfileRepository.saveAndFlush(newUserProfile);
         log.debug(updatedUserProfile.toString());
         return UserProfileMapper.INSTANCE.toDto(userProfileRepository.saveAndFlush(newUserProfile));
     }
 
-    private void updateJobSeekingStatusSNS(String accountUuid, Boolean seekingJob){
-        // integration with AWS SQS
-        SnsUpdateUserDto snsUpdateUserDto = new SnsUpdateUserDto(accountUuid, seekingJob);
-        String snsMessage;
-        try {
-            snsMessage = objectMapper.writeValueAsString(snsUpdateUserDto);
-            snsService.sendMessageToSnsTopic(snsMessage);
-        } catch (JsonProcessingException e) {
-            log.error("error occurred while converting SnsUpdateUserDto to JSON string", e.getMessage());
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error occurred while updating job seeking status");
-        } catch (AmazonSNSException e) {
-            log.error("error occurred while sending message to aws sns", e.getMessage());
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error occurred while updating job seeking status");
-        }
-    }
+//    private void updateJobSeekingStatusSNS(String accountUuid, Boolean seekingJob) throws JsonProcessingException {
+//        // integration with AWS SQS
+//        SnsUpdateUserDto snsUpdateUserDto = new SnsUpdateUserDto(accountUuid, seekingJob);
+//        String snsMessage;
+////        try {
+//        snsMessage = objectMapper.writeValueAsString(snsUpdateUserDto);
+//        snsService.sendMessageToSnsTopic(snsMessage);
+////        } catch (JsonProcessingException e) {
+////            log.error("error occurred while converting SnsUpdateUserDto to JSON string", e.getMessage());
+//////            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error occurred while updating job seeking status");
+////        } catch (AmazonSNSException e) {
+////            log.error("error occurred while sending message to aws sns", e.getMessage());
+//////            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error occurred while updating job seeking status");
+////        }
+//    }
 
 }
