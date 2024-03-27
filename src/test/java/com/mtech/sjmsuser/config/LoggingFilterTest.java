@@ -7,6 +7,7 @@ import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import javax.swing.text.StringContent;
 import java.io.IOException;
 
 import static org.mockito.Mockito.times;
@@ -18,6 +19,9 @@ public class LoggingFilterTest {
     public void testDoFilter() throws IOException, ServletException {
 
         MockHttpServletRequest req = new MockHttpServletRequest();
+        req.addHeader("test", "test");
+
+        req.setContent("hello".getBytes());
         MockHttpServletResponse res = new MockHttpServletResponse();
         MockFilterChain chain = new MockFilterChain();
         loggingFilter.doFilter(req, res, chain);
