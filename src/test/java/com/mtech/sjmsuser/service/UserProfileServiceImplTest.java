@@ -3,8 +3,10 @@ package com.mtech.sjmsuser.service;
 import com.mtech.sjmsuser.entity.Education;
 import com.mtech.sjmsuser.entity.UserProfile;
 import com.mtech.sjmsuser.entity.WorkExperience;
+import com.mtech.sjmsuser.model.EducationDto;
 import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
+import com.mtech.sjmsuser.model.WorkExperienceDto;
 import com.mtech.sjmsuser.repository.EducationRepository;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
 import com.mtech.sjmsuser.repository.WorkExperienceRepository;
@@ -33,12 +35,6 @@ class UserProfileServiceImplTest {
     private UserProfileRepository userProfileRepository;
 
     @Mock
-    private EducationRepository educationRepository;
-
-    @Mock
-    private WorkExperienceRepository workExperienceRepository;
-
-    @Mock
     private SnsService snsService;
 
     @BeforeEach
@@ -50,40 +46,7 @@ class UserProfileServiceImplTest {
     @Test
     void testFindByAccountUuid() {
         // Create a UserProfile instance for testing
-        var workingExperience = new WorkExperience();
-        workingExperience.setLogo("logo");
-        workingExperience.setExperience("experience");
-        workingExperience.setJobTitle("jobTitle");
-        workingExperience.setYearStart("start");
-        workingExperience.setYearEnd("end");
-        workingExperience.setCompany("company");
-        workingExperience.setId(2L);
-
-        var workingExperiences = new ArrayList<WorkExperience>();
-        workingExperiences.add(workingExperience);
-
-        var educationalExperience = new Education();
-        educationalExperience.setId(1L);
-        educationalExperience.setLogo("logo");
-        educationalExperience.setDescription("description");
-        educationalExperience.setSchool("school");
-        educationalExperience.setYearStart("start");
-        educationalExperience.setYearEnd("end");
-
-
-        var educationalExperiences = new ArrayList<Education>();
-        educationalExperiences.add(educationalExperience);
-
-        UserProfile userProfile = new UserProfile();
-        userProfile.setAccountUuid("testAccountUuid");
-        userProfile.setSeeking(false);
-        userProfile.setId(1L);
-        userProfile.setAbout("about");
-        userProfile.setImage("image");
-        userProfile.setEducation(educationalExperiences);
-        userProfile.setWorkExperience(workingExperiences);
-        userProfile.setJobTitle("jobTitle");
-        userProfile.setName("name");
+        UserProfile userProfile = getUserProfile();
 
         // Define the behavior of userProfileRepository.findByAccountUuid
         Mockito.when(userProfileRepository.findByAccountUuid("testAccountUuid"))
@@ -120,6 +83,44 @@ class UserProfileServiceImplTest {
         Assertions.assertEquals(userProfile.getWorkExperience().get(0).getYearEnd(), result.getWorkExperience().get(0).getYearEnd());
         Assertions.assertEquals(userProfile.getWorkExperience().get(0).getExperience(), result.getWorkExperience().get(0).getExperience());
         Assertions.assertEquals(userProfile.getWorkExperience().get(0).getJobTitle(), result.getWorkExperience().get(0).getJobTitle());
+    }
+
+    private static UserProfile getUserProfile() {
+        var workingExperience = new WorkExperience();
+        workingExperience.setLogo("logo");
+        workingExperience.setExperience("experience");
+        workingExperience.setJobTitle("jobTitle");
+        workingExperience.setYearStart("start");
+        workingExperience.setYearEnd("end");
+        workingExperience.setCompany("company");
+        workingExperience.setId(2L);
+
+        var workingExperiences = new ArrayList<WorkExperience>();
+        workingExperiences.add(workingExperience);
+
+        var educationalExperience = new Education();
+        educationalExperience.setId(1L);
+        educationalExperience.setLogo("logo");
+        educationalExperience.setDescription("description");
+        educationalExperience.setSchool("school");
+        educationalExperience.setYearStart("start");
+        educationalExperience.setYearEnd("end");
+
+
+        var educationalExperiences = new ArrayList<Education>();
+        educationalExperiences.add(educationalExperience);
+
+        UserProfile userProfile = new UserProfile();
+        userProfile.setAccountUuid("testAccountUuid");
+        userProfile.setSeeking(false);
+        userProfile.setId(1L);
+        userProfile.setAbout("about");
+        userProfile.setImage("image");
+        userProfile.setEducation(educationalExperiences);
+        userProfile.setWorkExperience(workingExperiences);
+        userProfile.setJobTitle("jobTitle");
+        userProfile.setName("name");
+        return userProfile;
     }
 
     @Test
@@ -216,5 +217,73 @@ class UserProfileServiceImplTest {
 
         // Assert that the returned UserProfileDto matches expectations
         Assertions.assertEquals (expectedUserProfileDto, resultUserProfileDto);
+    }
+
+    @Test
+    void testSaveUserProfile_AbleToUpdate() {
+        var workingExperience = new WorkExperienceDto();
+        workingExperience.setLogo("logo");
+        workingExperience.setExperience("experience");
+        workingExperience.setJobTitle("jobTitle");
+        workingExperience.setYearStart("start");
+        workingExperience.setYearEnd("end");
+        workingExperience.setCompany("company");
+        workingExperience.setId(0L);
+
+        var workingExperiences = new ArrayList<WorkExperienceDto>();
+        workingExperiences.add(workingExperience);
+
+        var educationalExperience = new EducationDto();
+        educationalExperience.setId(0L);
+        educationalExperience.setLogo("logo");
+        educationalExperience.setDescription("description");
+        educationalExperience.setSchool("school");
+        educationalExperience.setYearStart("start");
+        educationalExperience.setYearEnd("end");
+
+
+        var educationalExperiences = new ArrayList<EducationDto>();
+        educationalExperiences.add(educationalExperience);
+
+
+        // Mock UserProfileDto
+        UserProfileDto userProfileDto = new UserProfileDto();
+        userProfileDto.setAccountUuid("accountUuid");
+        userProfileDto.setEducation(educationalExperiences);
+        userProfileDto.setWorkExperience(workingExperiences);
+        // Populate userProfileDto with necessary fields
+
+        // Mock UserProfile and UserProfileOptional
+        UserProfile oldUserProfile = getUserProfile();
+        oldUserProfile.setId(1L);
+        oldUserProfile.setAccountUuid("accountUuid");
+        // Populate oldUserProfile with necessary fields
+        Optional<UserProfile> userProfileOptional = Optional.of(oldUserProfile);
+
+        // expected dto
+        UserProfileDto expectedUserProfileDto = new UserProfileDto();
+        expectedUserProfileDto.setName("name");
+        expectedUserProfileDto.setJobTitle("jobTitle");
+        expectedUserProfileDto.setId(1L);
+        expectedUserProfileDto.setAccountUuid("accountUuid");
+        expectedUserProfileDto.setImage("image");
+        expectedUserProfileDto.setAbout("about");
+        expectedUserProfileDto.setEducation(educationalExperiences);
+        expectedUserProfileDto.setWorkExperience(workingExperiences);
+
+        // Mock repositories behavior
+        when(userProfileRepository.findByAccountUuid(any())).thenReturn(userProfileOptional);
+        when(userProfileRepository.saveAndFlush(any())).thenReturn(oldUserProfile);
+
+        // Call the method under test
+        UserProfileDto resultUserProfileDto = userProfileService.saveUserProfile(userProfileDto);
+
+        // Asserts or verifications based on the behavior of the method
+        // For example:
+        // Verify that findByAccountUuid was called once
+        verify(userProfileRepository, times(1)).findByAccountUuid(any());
+
+        // Assert that the returned UserProfileDto matches expectations
+        Assertions.assertEquals(expectedUserProfileDto, resultUserProfileDto);
     }
 }
