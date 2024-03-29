@@ -113,7 +113,8 @@ private excludedClassFilesForReport(classDirectories) {
 				'**/entity/*.class',
 				'**/model/**/*.class',
 				'**/model/*.class',
-				'**/Application.class'
+				'**/Application.class',
+				'**/config/*.class'
 		])
 	}))
 }
