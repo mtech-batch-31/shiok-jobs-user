@@ -85,7 +85,7 @@ sonarqube {
 		property "sonar.projectKey", "mtech-batch-31_shiok-jobs-user-ms"
 		property "sonar.organization", "mtech-batch-31"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property 'sonar.coverage.jacoco.xmlReportPaths', "build/reports/jacoco/test/jacocoTestReport.xml"
+		property 'sonar.coverage.jacoco.xmlReportPaths', "${project.buildDir}/reports/jacoco.xml"
 		property "sonar.coverage.exclusions", "'**/entity/**', '**/model/**', '**/Application*'"
 	}
 }
@@ -100,6 +100,7 @@ jacocoTestReport {
 
 	reports {
 		xml.required = true
+		xml.destination = file
 	}
 
 	afterEvaluate {
