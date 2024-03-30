@@ -16,7 +16,7 @@ public class WorkExperience {
     private UserProfile userProfile;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
     private String company;
     private String yearStart;
@@ -35,7 +35,7 @@ public class WorkExperience {
     public String toString() {
         return "WorkExperience{" +
                 "userProfile=" + userProfile.getId() +
-                ", Id=" + Id +
+                ", id=" + id +
                 ", company='" + company + '\'' +
                 ", yearStart='" + yearStart + '\'' +
                 ", yearEnd='" + yearEnd + '\'' +

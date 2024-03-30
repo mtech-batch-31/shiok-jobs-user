@@ -99,8 +99,8 @@ class UserProfileControllerTest {
 
         // Mock UserProfileService's saveUserProfile method
         UserProfileDto savedUserProfileDto = new UserProfileDto();
-        savedUserProfileDto.setId(1L);
         savedUserProfileDto.setName("John Doe");
+        savedUserProfileDto.setJobTitle("Tester");
         Mockito.when(userProfileService.saveUserProfile(Mockito.any())).thenReturn(savedUserProfileDto);
 
         // Perform POST request
@@ -109,8 +109,8 @@ class UserProfileControllerTest {
                         .content(userProfileJson)
                         .headers(headers))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(savedUserProfileDto.getId()))
-                .andExpect(jsonPath("$.name").value(savedUserProfileDto.getName()));
+                .andExpect(jsonPath("$.name").value(savedUserProfileDto.getName()))
+                .andExpect(jsonPath("$.jobTitle").value(savedUserProfileDto.getJobTitle()));
 
         // Verify that saveUserProfile method is called with correct parameters
         verify(userProfileService, times(1)).saveUserProfile(any());

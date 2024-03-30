@@ -1,5 +1,6 @@
 package com.mtech.sjmsuser.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +14,11 @@ import java.util.List;
 @Builder
 public class UserProfileDto {
 
+    @JsonIgnore
     private long id;
+    @JsonIgnore
     private String accountUuid;
+    private String email;
     private String name;
     private boolean seeking;
     private String jobTitle;

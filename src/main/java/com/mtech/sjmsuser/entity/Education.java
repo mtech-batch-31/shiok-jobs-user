@@ -17,7 +17,7 @@ public class Education {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
     private String school;
     private String yearStart;
@@ -34,7 +34,7 @@ public class Education {
     public String toString() {
         return "Education{" +
                 "userProfile=" + userProfile.getId() +
-                ", Id=" + Id +
+                ", id=" + id +
                 ", school='" + school + '\'' +
                 ", yearStart='" + yearStart + '\'' +
                 ", yearEnd='" + yearEnd + '\'' +

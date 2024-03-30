@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {EducationMapper.class, WorkExperienceMapper.class})
+@Mapper
 public interface WorkExperienceMapper {
 
     WorkExperienceMapper INSTANCE = Mappers.getMapper(WorkExperienceMapper.class);
