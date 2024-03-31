@@ -51,6 +51,6 @@ public class MaskUtil {
 
     public static String maskString(String str) {
         // Replace characters in the string with asterisks
-        return pattern.matcher(str).replaceAll("");
+        return pattern.matcher(str).replaceAll("*");
     }
 }
