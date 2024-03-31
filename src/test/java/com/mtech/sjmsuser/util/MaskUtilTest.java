@@ -11,7 +11,7 @@ public class MaskUtilTest {
 
         String maskedValue = MaskUtil.applyMask(input);
 
-        String expectedValue = "{\"name\":\"\",\"email\":\"\"}";
+        String expectedValue = "{\"name\":\"*******\",\"email\":\"*************\"}";
 
         Assertions.assertEquals(expectedValue, maskedValue);
     }
