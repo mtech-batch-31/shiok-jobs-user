@@ -14,6 +14,7 @@ import com.mtech.sjmsuser.model.SnsUpdateUserDto;
 import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
 import com.mtech.sjmsuser.repository.EducationRepository;
+import com.mtech.sjmsuser.repository.UserProfileCustomRepository;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
 import com.mtech.sjmsuser.repository.WorkExperienceRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
-    private UserProfileRepository userProfileRepository;
+    private UserProfileCustomRepository userProfileCustomRepository;
 
     @Autowired
     private EducationRepository educationRepository;
@@ -45,8 +46,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     private ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @Override
+    @Transactional
     public UserProfileDto findByAccountUuid(String accountUuid) {
-        Optional<UserProfile> userProfileOptional = userProfileRepository.findByAccountUuid(accountUuid);
+        Optional<UserProfile> userProfileOptional = userProfileCustomRepository.findByAccountUuid(accountUuid);
         if (userProfileOptional.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
@@ -55,15 +57,16 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
+    @Transactional
     public UserProfileDto updateUserProfile(String accountUuid, UpdateUserDto updateUserDto) {
         // update userprofile data
-        Optional<UserProfile> userProfileOptional = userProfileRepository.findByAccountUuid(accountUuid);
+        Optional<UserProfile> userProfileOptional = userProfileCustomRepository.findByAccountUuid(accountUuid);
         if (userProfileOptional.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
         UserProfile userProfile = userProfileOptional.get();
         userProfile.setSeeking(updateUserDto.getSeekingJob());
-        userProfileRepository.saveAndFlush(userProfile);
+        userProfileCustomRepository.saveAndFlush(userProfile);
 
         // integration with AWS SQS
         //updateJobSeekingStatusSNS(accountUuid, updateUserDto.getSeekingJob());
@@ -75,7 +78,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     public UserProfileDto saveUserProfile(UserProfileDto userProfileDto) {
         UserProfile newUserProfile = UserProfileMapper.INSTANCE.toEntity(userProfileDto);
 
-        Optional<UserProfile> userProfileOptional = userProfileRepository.findByAccountUuid(userProfileDto.getAccountUuid());
+        Optional<UserProfile> userProfileOptional = userProfileCustomRepository.findByAccountUuid(userProfileDto.getAccountUuid());
         if (userProfileOptional.isPresent()){
             log.info("profile already exist, update existing profile");
 //            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "profile already exist");
@@ -86,7 +89,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         //
-        newUserProfile = userProfileRepository.saveAndFlush(newUserProfile);
+        newUserProfile = userProfileCustomRepository.saveAndFlush(newUserProfile);
         UserProfile finalNewUserProfile = newUserProfile;
 
         if (userProfileDto.getWorkExperience() != null) {
@@ -111,9 +114,9 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         //updateJobSeekingStatusSNS(newUserProfile.getAccountUuid(), newUserProfile.isSeeking());
-        UserProfile updatedUserProfile = userProfileRepository.saveAndFlush(newUserProfile);
-        log.debug(updatedUserProfile.toString());
-        return UserProfileMapper.INSTANCE.toDto(userProfileRepository.saveAndFlush(newUserProfile));
+        //UserProfile updatedUserProfile = userProfileCustomRepository.saveAndFlush(newUserProfile);
+        //log.debug(updatedUserProfile.toString());
+        return UserProfileMapper.INSTANCE.toDto(userProfileCustomRepository.saveAndFlush(newUserProfile));
     }
 
 //    private void updateJobSeekingStatusSNS(String accountUuid, Boolean seekingJob) throws JsonProcessingException {

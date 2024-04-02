@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String accountUuid;
+    @Column
+    @ColumnTransformer(read = "pgp_sym_decrypt(email::BYTEA, current_setting('var.encrypt_key'))",
+                        write = "pgp_sym_encrypt(?, current_setting('var.encrypt_key'))")
     private String email;
     private String name;
     private boolean seeking;

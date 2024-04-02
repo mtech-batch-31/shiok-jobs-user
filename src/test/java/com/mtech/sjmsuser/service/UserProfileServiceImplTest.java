@@ -9,6 +9,7 @@ import com.mtech.sjmsuser.model.UpdateUserDto;
 import com.mtech.sjmsuser.model.UserProfileDto;
 import com.mtech.sjmsuser.model.WorkExperienceDto;
 import com.mtech.sjmsuser.repository.EducationRepository;
+import com.mtech.sjmsuser.repository.UserProfileCustomRepository;
 import com.mtech.sjmsuser.repository.UserProfileRepository;
 import com.mtech.sjmsuser.repository.WorkExperienceRepository;
 import org.junit.jupiter.api.Assertions;
@@ -34,6 +35,9 @@ class UserProfileServiceImplTest {
     private UserProfileRepository userProfileRepository;
 
     @Mock
+    private UserProfileCustomRepository userProfileCustomRepository;
+
+    @Mock
     private EducationRepository educationRepository;
 
     @Mock
@@ -55,6 +59,8 @@ class UserProfileServiceImplTest {
 
         // Define the behavior of userProfileRepository.findByAccountUuid
         Mockito.when(userProfileRepository.findByAccountUuid("testAccountUuid"))
+                .thenReturn(Optional.of(userProfile));
+        Mockito.when(userProfileCustomRepository.findByAccountUuid("testAccountUuid"))
                 .thenReturn(Optional.of(userProfile));
 
         // Call the method to be tested
@@ -149,6 +155,8 @@ class UserProfileServiceImplTest {
         userProfile.setAccountUuid("testAccountUuid");
 
         // Define the behavior of userProfileRepository.findByAccountUuid
+        Mockito.when(userProfileCustomRepository.findByAccountUuid("testAccountUuid"))
+                .thenReturn(Optional.of(userProfile));
         Mockito.when(userProfileRepository.findByAccountUuid("testAccountUuid"))
                 .thenReturn(Optional.of(userProfile));
 
@@ -212,13 +220,16 @@ class UserProfileServiceImplTest {
         when(userProfileRepository.findByAccountUuid(any())).thenReturn(userProfileOptional);
         when(userProfileRepository.saveAndFlush(any())).thenReturn(oldUserProfile);
 
+        when(userProfileCustomRepository.findByAccountUuid(any())).thenReturn(userProfileOptional);
+        when(userProfileCustomRepository.saveAndFlush(any())).thenReturn(oldUserProfile);
+
         // Call the method under test
         UserProfileDto resultUserProfileDto = userProfileService.saveUserProfile(userProfileDto);
 
         // Asserts or verifications based on the behavior of the method
         // For example:
         // Verify that findByAccountUuid was called once
-        verify(userProfileRepository, times(1)).findByAccountUuid(any());
+        verify(userProfileCustomRepository, times(1)).findByAccountUuid(any());
 
         // Assert that the returned UserProfileDto matches expectations
         Assertions.assertEquals (expectedUserProfileDto, resultUserProfileDto);
@@ -282,7 +293,10 @@ class UserProfileServiceImplTest {
 
         // Mock repositories behavior
         when(userProfileRepository.findByAccountUuid(any())).thenReturn(userProfileOptional);
+        when(userProfileCustomRepository.findByAccountUuid(any())).thenReturn(userProfileOptional);
+
         when(userProfileRepository.saveAndFlush(any())).thenReturn(oldUserProfile);
+        when(userProfileCustomRepository.saveAndFlush(any())).thenReturn(oldUserProfile);
 
         // Call the method under test
         UserProfileDto resultUserProfileDto = userProfileService.saveUserProfile(userProfileDto);
@@ -290,7 +304,7 @@ class UserProfileServiceImplTest {
         // Asserts or verifications based on the behavior of the method
         // For example:
         // Verify that findByAccountUuid was called once
-        verify(userProfileRepository, times(1)).findByAccountUuid(any());
+        verify(userProfileCustomRepository, times(1)).findByAccountUuid(any());
 
         // Assert that the returned UserProfileDto matches expectations
         Assertions.assertEquals(expectedUserProfileDto, resultUserProfileDto);
