@@ -37,7 +37,9 @@ class UserProfileControllerTest {
 
     @BeforeEach
     void init() {
-        mockMvc = MockMvcBuilders.standaloneSetup(new UserProfileController(userProfileService)).setControllerAdvice(new ControllerAdvice()).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(new UserProfileController(userProfileService))
+                                .setControllerAdvice(new ControllerAdvice())
+                                .build();
     }
 
     @Test

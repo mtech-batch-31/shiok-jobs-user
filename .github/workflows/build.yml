@@ -114,6 +114,7 @@ jobs:
       DATASOURCE_USER_ID: ${{ secrets.DATASOURCE_USER_ID }}
       DATASOURCE_SECRET: ${{ secrets.DATASOURCE_SECRET }}
       SNS_TOPIC_ARN: ${{ secrets.SNS_TOPIC_ARN }}
+      PII_ENCRYPT_KEY: ${{ secrets.PII_ENCRYPT_KEY }}
 
     steps:
       - name: Checkout code

@@ -53,7 +53,8 @@ spec:
             - name: aws.sns.topic.arn.job-seeker-status-update
               value: ${SNS_TOPIC_ARN}
 
-
+            - name: pii.encrypt.key
+              value: ${PII_ENCRYPT_KEY}
 
           imagePullPolicy: Always
           ports:
