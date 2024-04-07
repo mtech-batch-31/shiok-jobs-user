@@ -1,6 +1,6 @@
 package com.mtech.sjmsuser;
 
-import com.mtech.sjmsuser.config.LoggingFilter;
+import com.mtech.sjmsuser.config.RequestResponseFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -15,7 +15,7 @@ public class Application {
 	@Bean
 	public FilterRegistrationBean loadBalancerHealthCheckHandler() {
 		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setFilter(new LoggingFilter());
+		registration.setFilter(new RequestResponseFilter());
 		registration.addUrlPatterns("/*");
 		return registration;
 	}

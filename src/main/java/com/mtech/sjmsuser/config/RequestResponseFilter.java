@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class LoggingFilter implements Filter {
+public class RequestResponseFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -38,7 +38,7 @@ public class LoggingFilter implements Filter {
 //        // log information from the httpServletRequest like url, params, etc
         log.info("REQUEST RECEIVED, path: {}, method: {}, headers: {}, body: {},",request.getRequestURL(), request.getMethod(), headers, requestBody);
 
-        ((HttpServletResponse) servletResponse).setHeader("Access-Control-Allow-Origin","*");
+        ((HttpServletResponse) servletResponse).setHeader("Access-Control-Allow-Origin","https://d2loqognvf0v5n.cloudfront.net");
         filterChain.doFilter(bufferedRequest, servletResponse);
 
         // log information regarding the httpServletResponse like status code, etc
