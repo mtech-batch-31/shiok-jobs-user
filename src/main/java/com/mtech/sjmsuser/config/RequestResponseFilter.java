@@ -39,6 +39,7 @@ public class RequestResponseFilter implements Filter {
         log.info("REQUEST RECEIVED, path: {}, method: {}, headers: {}, body: {},",request.getRequestURL(), request.getMethod(), headers, requestBody);
 
         ((HttpServletResponse) servletResponse).setHeader("Access-Control-Allow-Origin","https://d2loqognvf0v5n.cloudfront.net");
+        ((HttpServletResponse) servletResponse).setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         filterChain.doFilter(bufferedRequest, servletResponse);
 
         // log information regarding the httpServletResponse like status code, etc
