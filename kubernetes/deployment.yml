@@ -27,7 +27,7 @@ spec:
               cpu: 100m
             limits:
               memory: 256Mi
-              cpu: 100m
+              cpu: 200m
           env:
             - name: spring.datasource.url
               value: ${DATASOURCE_URL}
