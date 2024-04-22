@@ -209,7 +209,6 @@ jobs:
           path: |
             build/sonar/report-task.txt
 
-
   zap_scan:
     needs: deploy_to_eks
     runs-on: ubuntu-latest
