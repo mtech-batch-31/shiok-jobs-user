@@ -210,6 +210,7 @@ jobs:
             build/sonar/report-task.txt
 
   zap_scan:
+    permissions: write-all
     needs: deploy_to_eks
     runs-on: ubuntu-latest
     name: Zap Scan
